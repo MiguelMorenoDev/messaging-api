@@ -42,7 +42,7 @@ export const getMessagesByChannel = async (req: Request, res: Response) => {
         const messages = await messageRepo.find({
             where: { channel: { id: Number(channelId) } },
             relations: ["user"], // Para saber el nombre del que escribió
-            order: { createdAt: "ASC" } // Los más viejos primero, como en WhatsApp
+            order: { createdAt: "ASC" } // Los mensajes más antiguos primero
         });
 
         res.json(messages);

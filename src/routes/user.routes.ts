@@ -9,7 +9,7 @@ const userController = new UserController();
 // Ruta para traer todos
 userRouter.get('/', (req, res) => userController.getAll(req, res));
 
-// Ruta para traer uno por ID (Aquí aplicas el schema)
+// Ruta para traer uno por ID y aplicamos el schema
 userRouter.get('/:id', validateSchema(paramsIdSchema), (req, res) => userController.getOne(req, res));
 
 export default userRouter;

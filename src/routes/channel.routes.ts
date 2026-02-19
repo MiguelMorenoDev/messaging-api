@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { ChannelController } from "../controllers/channel.controller";
-import { checkJwt } from "../middlewares/checkJwt.middleware"; // Asegúrate de que el nombre coincide con tu archivo
+import { checkJwt } from "../middlewares/checkJwt.middleware";
 
 const router = Router();
 const controller = new ChannelController();

@@ -9,8 +9,6 @@ declare global {
     }
   }
 }
-// Esta línea es clave: obliga a TS a tratar este archivo como un módulo
-
 
 //Access Token Middleware
 export const authMiddleware = (req: Request, res: Response, next: NextFunction) => {

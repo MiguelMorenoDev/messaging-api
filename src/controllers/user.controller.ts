@@ -16,7 +16,7 @@ export class UserController {
 
   async getOne(req: Request, res: Response) {
     try {
-   // 1. Convertimos el ID a número (sin llaves {})
+   // 1. Convertimos el ID a número 
       const id = parseInt(req.params.id as string, 10);
 
     // 2. Buscamos en la base de datos

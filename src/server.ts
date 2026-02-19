@@ -59,7 +59,7 @@ io.on("connection", (socket) => {
                 createdAt: newMessage.createdAt
             });
         } catch (err: any) {
-            // 3. CAPTURAMOS EL ERROR DE ZOD <--- NUEVO
+            // 3. CAPTURAMOS EL ERROR DE ZOD 
             console.error("Error en mensaje:", err.errors || err);
             socket.emit("error", {
                 message: "Datos inválidos",
