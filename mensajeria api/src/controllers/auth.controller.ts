@@ -6,19 +6,12 @@ import jwt from "jsonwebtoken";
 import { IUser } from "../interfaces/user.interface.js";
 import { ITokenPayload } from "../interfaces/tokenpayload.interface.js";
 import { IAccessTokenPayload } from "../interfaces/IAccessTokenPayload.js";
-import { Channel } from "../entities/Channel";
-import { UserChannel } from "../entities/UserChannel.js"
 export const register = async (req: Request, res: Response) => {
-
     try {
         const { email, password } = req.body;
         const userRepository = AppDataSource.getRepository(User);
         const existingUser = await userRepository.findOneBy({ email }) as IUser;
-        const channelRepo = AppDataSource.getRepository(Channel);
-        const joinTableRepo = AppDataSource.getRepository(UserChannel);
-        const userRepo = AppDataSource.getRepository(User);
-        const generalChannel = await channelRepo.findOneBy({ name: "General"});
-
+        
         if (existingUser) {
             return res.status(400).json({ message: "El email ya está registrado" });
         }
@@ -30,17 +23,8 @@ export const register = async (req: Request, res: Response) => {
             email, 
             password: hashedPassword 
         });
-
-        await userRepository.save(newUser);
-
-        if (generalChannel) {
-            await joinTableRepo.save({
-                userId: newUser.id,
-                channelId: generalChannel.id,
-                role: 'member'
-            });
-        }
         
+        await userRepository.save(newUser);
         res.status(201).json({ message: "Usuario creado con éxito" });
     } catch (error) {
         res.status(500).json({ message: "Error en el servidor", error });
