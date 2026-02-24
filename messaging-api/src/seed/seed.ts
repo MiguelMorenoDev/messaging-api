@@ -1,5 +1,6 @@
-import { AppDataSource } from "../config/data-source"; // Ajusta la ruta a tu DataSource
-import { User } from "../entities/User";           // Ajusta tus entidades
+import bcrypt from "bcrypt";
+import { AppDataSource } from "../config/data-source";
+import { User } from "../entities/User";   
 import { Channel } from "../entities/Channel";
 import "reflect-metadata";
 const runSeed = async () => {
@@ -14,11 +15,12 @@ const runSeed = async () => {
     // 2. Crear Usuario de prueba (si no existe)
     let testUser = await userRepository.findOneBy({ email: "tester@pro.com" });
     if (!testUser) {
+      const hashedPassword = await bcrypt.hash("1234", 10);
       testUser = userRepository.create({
         firstName: "Tester",
         lastName: "Pro",
         email: "tester@pro.com",
-        password: "1234"
+        password: hashedPassword
         // password: "123" (si tienes este campo, asegúrate de ponerlo)
       });
       await userRepository.save(testUser);

@@ -1,6 +1,5 @@
 import "reflect-metadata";
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToMany, JoinTable } from "typeorm";
-import { User } from "./User.js";
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
 import { Message } from "./Message.js";
 
 @Entity()
@@ -12,19 +11,10 @@ export class Channel {
     @Column({ type: "varchar", unique: true })
     name!: string;
 
-    //Canales privados o públicos
-    @Column({ type: 'boolean', default: false })
-    isPrivate!: boolean;
-
     // Y aquí también, indicando que puede ser nulo
     @Column({ type: "varchar", nullable: true })
     description!: string;
 
     @OneToMany(() => Message, (message) => message.channel)
     messages!: Message[];
-
-    // Relación con los miembros (Muchos a Muchos)
-    @ManyToMany(() => User)
-    @JoinTable() // Crea una tabla para saber que usuarios están asignados a un channel
-    members!: User[];
 }

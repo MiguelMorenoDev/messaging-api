@@ -12,5 +12,5 @@ app.use(express.json());
 app.use("/api/auth", authRoutes);
 app.use("/api/chat", chatRoutes);
 app.use("/api/users", userRoutes);
-app.use("/api/channels", channelRoutes);
+app.use("/api/channel", channelRoutes);
 export default app;
