@@ -27,7 +27,7 @@ export const authMiddleware = (req: Request, res: Response, next: NextFunction) 
         const secret = process.env.JWT_SECRET;
 
         if (!secret) {  
-            throw new Error("Falta la variable JWT_SECRET en .env")
+            return res.status(500).json({ message: "Internal server error" });
         }
 
         // 3. Verificar el token
@@ -39,7 +39,7 @@ export const authMiddleware = (req: Request, res: Response, next: NextFunction) 
         // Esto permite que el siguiente paso sepa quién es el usuario
         req.tokenData = decoded;
 
-        next(); // ¡Todo ok! Pasa al siguiente paso (el controlador)
+        next(); // ok, Pasa al siguiente paso (el controlador)
     } catch (error) {
         res.status(401).json({ message: "Token no válido o caducado" });
     }
