@@ -3,5 +3,5 @@ export interface IUser {
     email: string;
     password: string;
     isActive?: boolean;
-    refreshToken?: string;
+    refreshToken?: string | null;
 } 

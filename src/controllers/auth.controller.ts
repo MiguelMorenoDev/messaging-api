@@ -55,11 +55,11 @@ export const login = async (req: Request, res: Response) => {
             { expiresIn: "15m" }
         );
 
-        // 2. Refresh Token (Largo: 7 días) - Para renovar la sesión
+        // 2. Refresh Token (Largo: 30 días) - Para renovar la sesión
         const refreshToken = jwt.sign(
             { id: user.id },
             process.env.JWT_REFRESH_SECRET!,
-            { expiresIn: "365d" }
+            { expiresIn: "30d" }
         );
 
         // 3. Guardamos el Refresh Token en la base de datos para poder validarlo/revocarlo
@@ -75,6 +75,27 @@ export const login = async (req: Request, res: Response) => {
 
     } catch (error) {
         res.status(500).json({ message: "Error en el servidor", error });
+    }
+};
+    // Logout
+    export const logout = async (req: Request, res: Response) => {
+        try {
+            const userId = req.user?.id;
+
+            if (!userId) {
+                return res.status(401).json({message: "Usuario no identificado"});
+            }
+       
+
+        const userRepository = AppDataSource.getRepository(User);
+
+        //Buscamos y usamos el refresh token
+        await userRepository.update(userId, { refreshToken: null as any });
+
+        res.status(200).json( { message: "Sesión cerrada correctamente"});
+ 
+    } catch (error) {
+        res.status(500).json({ message: "Error en el servidor al cerrar sesión"});
     }
 };
 
@@ -109,14 +130,12 @@ export const refresh = async (req: Request, res: Response) => {
             { expiresIn: "15m" }
         );
 
-        //Creación del nuevo refresh Token
+        //Creación del nuevo refresh Token (30 días)
         const newRefreshToken = jwt.sign(
             { id: user.id },
             process.env.JWT_REFRESH_SECRET!,
-            { expiresIn: "365d"}
+            { expiresIn: "30d"}
         ) 
-
-
 
         // Guardamos la nueva "llave maestra" y borramos la vieja
         user.refreshToken = newRefreshToken;
@@ -129,4 +148,4 @@ export const refresh = async (req: Request, res: Response) => {
     } catch (error) {
         res.status(401).json({ message: "Token inválido o expirado" });
     }
-};
+        };

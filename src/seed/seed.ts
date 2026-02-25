@@ -21,7 +21,7 @@ const runSeed = async () => {
         lastName: "Pro",
         email: "tester@pro.com",
         password: hashedPassword
-        // password: "123" (si tienes este campo, asegúrate de ponerlo)
+        // password: "123"
       });
       await userRepository.save(testUser);
       console.log("👤 Usuario creado: tester@pro.com");

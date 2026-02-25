@@ -23,7 +23,7 @@ export class User implements IUser {
     isActive!: boolean;
 
     @Column({ type: "varchar", nullable: true })
-    refreshToken!: string;
+    refreshToken?: string | null;
 
     @OneToMany(() => Message, (message) => message.user)
     messages!: Message[];

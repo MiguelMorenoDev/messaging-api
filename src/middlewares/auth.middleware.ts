@@ -5,7 +5,7 @@ import { ITokenPayload } from "../interfaces/tokenpayload.interface";
 declare global {
   namespace Express {
     interface Request {
-      tokenData?: ITokenPayload; 
+      user?: ITokenPayload; 
     }
   }
 }
@@ -37,7 +37,7 @@ export const authMiddleware = (req: Request, res: Response, next: NextFunction) 
 
         // 3. Añadir los datos del usuario a la petición (req)
         // Esto permite que el siguiente paso sepa quién es el usuario
-        req.tokenData = decoded;
+        req.user = decoded;
 
         next(); // ok, Pasa al siguiente paso (el controlador)
     } catch (error) {
