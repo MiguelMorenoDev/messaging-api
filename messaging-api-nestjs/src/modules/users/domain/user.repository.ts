@@ -1,6 +1,6 @@
 import { User } from './user.entity'
 import { DataSource } from 'typeorm';
-
+import { CreateUserDto } from './create-user.dto';
 export const USER_REPOSITORY = Symbol('USER_REPOSITORY');
 
 export interface IUserRepository {
@@ -8,7 +8,7 @@ export interface IUserRepository {
     findAll(): Promise<User[]>
 
     //Traer usuario por id
-    findById(id: number): Promise<User> | null;
+    findById(id: number): Promise<User | null >;
 
     //buscar email (para el login)
     findByEmail(email: string): Promise<User | null>;
@@ -18,7 +18,7 @@ export interface IUserRepository {
     findByIdAndRefreshToken(id: number, refreshToken: string): Promise<User | null>;
 
     //Guarda un usuario o actualiza uno existente
-    save(user: Partial<User> & {email: string, password: string }): Promise<User>;
+    save(data: CreateUserDto) : Promise<User>;
 
     //Actualiza campos concretos de un usuario
     update(id: number, data: {refreshToken?: string | null}):Promise<void>;
