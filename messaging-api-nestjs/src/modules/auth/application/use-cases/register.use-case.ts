@@ -13,7 +13,7 @@ export class RegisterUseCase {
   ) {}
 
   async execute(dto: RegisterDto): Promise<void> {
-    // 1. ¿Ya existe un usuario con ese email?
+    // 1. Ya existe un usuario con ese email?
     const existing = await this.userRepository.findByEmail(dto.email);
     if (existing) {
       throw new BadRequestException('El email ya está registrado');
